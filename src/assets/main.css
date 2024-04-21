@@ -1,35 +1,41 @@
+@import './inter.css';
 @import './base.css';
 
-#app {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  font-weight: normal;
+/**
+  * Text styles
+  */
+
+:root {
+  @apply text-gray-800;
 }
 
-a,
-.green {
-  text-decoration: none;
-  color: hsla(160, 100%, 37%, 1);
-  transition: 0.4s;
-  padding: 3px;
+h1,
+h2,
+h3 {
+  @apply font-bold;
 }
 
-@media (hover: hover) {
-  a:hover {
-    background-color: hsla(160, 100%, 37%, 0.2);
-  }
+h1 {
+  @apply text-4xl;
 }
 
-@media (min-width: 1024px) {
-  body {
-    display: flex;
-    place-items: center;
-  }
+h2 {
+  @apply text-3xl;
+}
 
-  #app {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    padding: 0 2rem;
-  }
+h3 {
+  @apply text-2xl;
+}
+
+h4 {
+  @apply text-xl;
+}
+
+.numeric {
+  /* Slashed zeros */
+  font-feature-settings:
+    'tnum' on,
+    'ss04' off,
+    'ss01' on,
+    'ss02' on;
 }

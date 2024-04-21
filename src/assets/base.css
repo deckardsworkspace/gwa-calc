@@ -25,7 +25,10 @@ body {
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  font-feature-settings: 'ss04' on, 'cv10' on, 'cv11' on;
+  font-feature-settings:
+    'ss04' on,
+    'cv10' on,
+    'cv11' on;
 }
 
 @supports (font-variation-settings: normal) {
