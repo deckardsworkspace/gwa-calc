@@ -39,3 +39,11 @@ h4 {
     'ss01' on,
     'ss02' on;
 }
+
+/**
+  * Mobile styles
+  */
+
+a, button, input {
+  touch-action: manipulation;
+}

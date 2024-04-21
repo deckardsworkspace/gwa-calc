@@ -8,7 +8,7 @@
   box-sizing: border-box;
 }
 
-body {
+:root {
   font-family:
     Inter,
     -apple-system,
