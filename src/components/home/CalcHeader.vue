@@ -7,7 +7,7 @@ defineProps<{
 </script>
 
 <template>
-  <header class="pb-8">
+  <header class="px-8 pb-6">
     <div class="flex justify-between items-center">
       <div class="flex flex-col">
         <h3>GWA Calc 2</h3>

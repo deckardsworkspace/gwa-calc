@@ -2,33 +2,21 @@
 import CalcHeader from '../components/home/CalcHeader.vue';
 import CourseTable from '../components/home/CourseTable.vue';
 import ResultDisplay from '../components/home/ResultDisplay.vue';
+import { PshsTerm, PshsTerms } from '@/utils/terms-pshs';
+import { ref } from 'vue';
 
-const courses = [
-  {
-    id: '1',
-    name: 'Course 1',
-    units: 3,
-    value: 1,
-    onUpdate: (id: string, newValue: number) => {
-      console.log(`Course ${id} updated to ${newValue}`);
-    },
-  },
-  {
-    id: '2',
-    name: 'Course 2',
-    units: 3,
-    value: 3,
-    onUpdate: (id: string, newValue: number) => {
-      console.log(`Course ${id} updated to ${newValue}`);
-    },
-  },
-];
+const term = PshsTerms[PshsTerm.GRADE_10];
+const result = ref(1);
+
+const onRecalculate = (newResult: number) => {
+  result.value = newResult;
+};
 </script>
 
 <template>
-  <div class="max-w-4xl w-full max-h-fit h-full p-8 mx-auto">
+  <div class="max-w-4xl w-full max-h-fit h-full relative p-8 mx-auto">
     <CalcHeader :currentTermName="'Default Term'" />
-    <ResultDisplay :result="3.14159" />
-    <CourseTable :courses="courses" />
+    <ResultDisplay :result="result" />
+    <CourseTable :term="term" @recalculate="onRecalculate" />
   </div>
 </template>
