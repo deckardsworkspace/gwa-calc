@@ -1,140 +1,85 @@
+<script setup lang="ts">
+import { RouterLink, RouterView } from 'vue-router'
+import HelloWorld from './components/HelloWorld.vue'
+</script>
+
 <template>
-  <v-app>
-    <v-content>
-      <router-view :key="$route.fullPath"/>
+  <header>
+    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
 
-      <!-- Dialogs -->
-      <donate-dialog/>
-      <set-creator-dialog/>
-      <set-decoder-dialog/>
-      <set-encoder-dialog/>
-      <set-manager-dialog/>
-      <transmute-dialog/>
-      <!-- Edit subject confirmation dialog -->
-      <v-dialog class="confirm-dialog" v-model="showEditConfirmDialog" max-width="400px">
-        <v-card>
-          <v-card-title>
-            <span class="title">Edit {{ setToEdit }}?</span>
-          </v-card-title>
+    <div class="wrapper">
+      <HelloWorld msg="You did it!" />
 
-          <v-card-text>
-            <p class="body-1 red--text">Editing the subjects will clear your grades for this subject set.</p>
-            <p class="body-1">It's recommended that you back up your currently entered grades first (e.g. through screenshots) before continuing.</p>
-          </v-card-text>
+      <nav>
+        <RouterLink to="/">Home</RouterLink>
+        <RouterLink to="/about">About</RouterLink>
+      </nav>
+    </div>
+  </header>
 
-          <v-card-actions>
-            <v-spacer/>
-            <v-btn text @click="showEditConfirmDialog = false">Cancel</v-btn>
-            <v-btn text @click="editConfirmedHandler">Edit</v-btn>
-          </v-card-actions>
-        </v-card>
-      </v-dialog>
-      <!-- Clear data dialog -->
-      <v-dialog class="confirm-dialog" v-model="showClearDialog" max-width="400px">
-        <v-card>
-          <v-card-title>
-            <span class="title">Delete {{ garbage }}?</span>
-          </v-card-title>
-
-          <v-card-text>
-            <p class="body-1 red--text">This process is irreversible!</p>
-          </v-card-text>
-
-          <v-card-actions>
-            <v-spacer/>
-            <v-btn text @click="resetState">Cancel</v-btn>
-            <v-btn text @click="clearHandler">Delete</v-btn>
-          </v-card-actions>
-        </v-card>
-      </v-dialog>
-
-      <!-- Delete confirmation -->
-      <v-snackbar v-model="deleteSuccessful" color="success" left :timeout="3000">Deleted</v-snackbar>
-    </v-content>
-
-    <nav-drawer/>
-  </v-app>
+  <RouterView />
 </template>
 
-<style lang="scss" scoped>
-@import './styles/App';
-</style>
+<style scoped>
+header {
+  line-height: 1.5;
+  max-height: 100vh;
+}
 
-<script lang="ts">
-import Vue from 'vue'
-import { mapState } from 'vuex'
-import { Component, Watch } from 'vue-property-decorator'
+.logo {
+  display: block;
+  margin: 0 auto 2rem;
+}
 
-@Component({
-  components: {
-    DonateDialog: () => import(/* webpackChunkName: "donate" */ './components/dialogs/DonateDialog.vue'),
-    NavDrawer: () => import(/* webpackChunkName: "drawer" */ './components/NavDrawer.vue'),
-    SetCreatorDialog: () => import(/* webpackChunkName: "create" */ './components/dialogs/SetCreatorDialog.vue'),
-    SetDecoderDialog: () => import(/* webpackChunkName: "decode" */ './components/dialogs/SetDecoderDialog.vue'),
-    SetEncoderDialog: () => import(/* webpackChunkName: "encode" */ './components/dialogs/SetEncoderDialog.vue'),
-    SetManagerDialog: () => import(/* webpackChunkName: "manage" */ './components/dialogs/SetManagerDialog.vue'),
-    TransmuteDialog: () => import(/* webpackChunkName: "transmute" */ './components/dialogs/TransmuteDialog.vue'),
-  },
-  computed: mapState(['isDarkMode']),
-})
-export default class App extends Vue {
-  public isDarkMode!: boolean
-  public deleteSuccessful: boolean = false
-  public garbage: string = 'all data'
-  public isClearingSet: boolean = false
-  public setToEdit: string = ''
-  public showClearDialog: boolean = false
-  public showEditConfirmDialog: boolean = false
+nav {
+  width: 100%;
+  font-size: 12px;
+  text-align: center;
+  margin-top: 2rem;
+}
 
-  public created() {
-    this.$bus.$on('delete-all-data', () => this.showClearDialog = true)
-    this.$bus.$on('delete-custom-set', (set: string) => {
-      this.garbage = set
-      this.isClearingSet = true
-      this.showClearDialog = true
-    })
-    this.$bus.$on('confirm-edit-custom-set', (set: string) => {
-      this.setToEdit = set
-      this.showEditConfirmDialog = true
-    })
+nav a.router-link-exact-active {
+  color: var(--color-text);
+}
+
+nav a.router-link-exact-active:hover {
+  background-color: transparent;
+}
+
+nav a {
+  display: inline-block;
+  padding: 0 1rem;
+  border-left: 1px solid var(--color-border);
+}
+
+nav a:first-of-type {
+  border: 0;
+}
+
+@media (min-width: 1024px) {
+  header {
+    display: flex;
+    place-items: center;
+    padding-right: calc(var(--section-gap) / 2);
   }
 
-  public clearHandler() {
-    if (this.isClearingSet) {
-      this.$store.dispatch('deleteSet', this.garbage)
-        .then(() => this.deleteSuccessful = true)
-        .then(() => this.resetState())
-    } else {
-      this.$store.dispatch('clearAllData')
-        .then(() => this.deleteSuccessful = true)
-        .then(() => this.resetState())
-    }
+  .logo {
+    margin: 0 2rem 0 0;
   }
 
-  public editConfirmedHandler() {
-    this.$bus.$emit('edit-custom-set', this.setToEdit)
-    this.setToEdit = ''
-    this.showEditConfirmDialog = false
+  header .wrapper {
+    display: flex;
+    place-items: flex-start;
+    flex-wrap: wrap;
   }
 
-  public resetState() {
-    this.isClearingSet = false
-    this.showClearDialog = false
-    this.garbage = 'all data'
-  }
+  nav {
+    text-align: left;
+    margin-left: -1rem;
+    font-size: 1rem;
 
-  @Watch('isDarkMode', { immediate: true })
-  private updateVuetifyTheme(theme: boolean) {
-    const barColor = document.querySelector('meta[name=theme-color]') as HTMLMetaElement
-    if (barColor !== null) {
-      if (theme) {
-        barColor.content = '#212121'
-      } else {
-        barColor.content = '#e65100'
-      }
-    }
-
-    this.$vuetify.theme.dark = theme
+    padding: 1rem 0;
+    margin-top: 1rem;
   }
 }
-</script>
+</style>

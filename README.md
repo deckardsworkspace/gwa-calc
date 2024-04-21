@@ -1,80 +1,64 @@
-# [gwa-calc](https://calc.dantis.me/)
+# gwa-calc
 
-[![Netlify Status](https://api.netlify.com/api/v1/badges/73b0ee1f-01f1-4660-a201-54e2b5c1efe1/deploy-status)](https://app.netlify.com/sites/gwa-calc/deploys) [![dependencies](https://david-dm.org/jareddantis/gwa-calc/status.svg)](https://david-dm.org/jareddantis/gwa-calc) [![devDependencies](https://david-dm.org/jareddantis/gwa-calc/dev-status.svg)](https://david-dm.org/jareddantis/gwa-calc?type=dev) [![GitHub license](https://img.shields.io/github/license/jareddantis/gwa-calc.svg)](https://github.com/jareddantis/gwa-calc/blob/master/LICENSE.md)
+This template should help get you started developing with Vue 3 in Vite.
 
-A quick, responsive general weighted average calculator for the modern web.
-Built with Vue.js and Typescript, by a student, for students.
+## Recommended IDE Setup
 
-## Features
+[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
 
-* GWA calculation
-* Support for up to 5 sets of 20 subjects
-* Grade transmutation and preset subjects for Philippine Science High School students
-* Share subject sets and calculate with your friends through in-app QR codes
-* Progressive Web App (can be installed offline)
+## Type Support for `.vue` Imports in TS
 
-## Building
+TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) to make the TypeScript language service aware of `.vue` types.
 
-To build the calculator on your machine, you will need a working installation of [Node.js](https://nodejs.org/en/download/).
+## Customize configuration
 
-Once you have Node.js installed, clone the repository locally and install the required Node.js modules (the following steps are for Linux/macOS):
+See [Vite Configuration Reference](https://vitejs.dev/config/).
 
-```bash
-git clone https://github.com/jareddantis/gwa-calc.git
-cd gwa-calc
-npm install -g @vue/cli
+## Project Setup
+
+```sh
 npm install
 ```
 
-You are now ready to make your changes to the files inside `src/`. Preview your changes in your browser:
+### Compile and Hot-Reload for Development
 
-```bash
-npm run serve
+```sh
+npm run dev
 ```
 
-When you're done, build the calculator:
+### Type-Check, Compile and Minify for Production
 
-```bash
+```sh
 npm run build
 ```
 
-Then serve the resulting `dist` directory in your [SPA](https://en.wikipedia.org/wiki/Single-page_application) compliant web server of choice.
+### Run Unit Tests with [Vitest](https://vitest.dev/)
 
-## Contributing
-
-The calculator is automatically built and deployed with Netlify to make updating and testing easier.
-
-If you have a suggestion for the calculator, you can open an issue from the tab above or make a pull request on this repository if you have some code to share!
-
-## Credits
-
-- [@eligrey/FileSaver.js](https://github.com/eligrey/FileSaver.js/)
-- [@FortAwesome/Font-Awesome](https://github.com/FortAwesome/Font-Awesome)
-- [@google/material-design-icons,](https://material.io) [/workbox](https://github.com/googlechrome/workbox)
-- [@localForage](https://github.com/localForage/localForage)
-- [@nimiq/qr-scanner](https://github.com/nimiq/qr-scanner)
-- [@pieroxy/lz-string](https://github.com/pieroxy/lz-string)
-- [@soldair/node-qrcode](https://github.com/soldair/node-qrcode)
-- [@SortableJS](https://github.com/SortableJS/Sortable)
-- [@vuejs](https://vuejs.org/)
-- [@vuetifyjs](https://vuetifyjs.com)
-
-## License
-
+```sh
+npm run test:unit
 ```
-gwa-calc: The quick, responsive GWA calculator for PSHS and college students.
-Copyright (C) 2019-2020 Aurel Jared Dantis
 
-This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU Affero General Public License as
-published by the Free Software Foundation, either version 3 of the
-License, or (at your option) any later version.
+### Run End-to-End Tests with [Playwright](https://playwright.dev)
 
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU Affero General Public License for more details.
+```sh
+# Install browsers for the first run
+npx playwright install
 
-You should have received a copy of the GNU Affero General Public License
-along with this program.  If not, see <https://www.gnu.org/licenses/>.
+# When testing on CI, must build the project first
+npm run build
+
+# Runs the end-to-end tests
+npm run test:e2e
+# Runs the tests only on Chromium
+npm run test:e2e -- --project=chromium
+# Runs the tests of a specific file
+npm run test:e2e -- tests/example.spec.ts
+# Runs the tests in debug mode
+npm run test:e2e -- --debug
+```
+
+### Lint with [ESLint](https://eslint.org/)
+
+```sh
+npm run lint
 ```

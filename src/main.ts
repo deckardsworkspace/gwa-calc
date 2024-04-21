@@ -1,36 +1,14 @@
-import Vue from 'vue'
+import './assets/main.css'
+
+import { createApp } from 'vue'
+import { createPinia } from 'pinia'
+
 import App from './App.vue'
-import EventBus from './eventbus'
-import router from './routes'
-import store from './store/store'
-import vuetify from './components'
-import './registerServiceWorker'
-import './styles/global.scss'
+import router from './router'
 
-// Custom filters for grades and averages
-Vue.filter('asGrade', (value?: number) => {
-  if (value === undefined) {
-    return '1.00'
-  } else {
-    return value.toFixed(2)
-  }
-})
-Vue.filter('asAverage', (value?: number) => {
-  if (value === undefined) {
-    return '1.000'
-  } else {
-    return value.toFixed(6).substring(0, 5)
-  }
-})
+const app = createApp(App)
 
-// Event bus
-Vue.use(EventBus)
+app.use(createPinia())
+app.use(router)
 
-Vue.config.productionTip = false
-
-new Vue({
-  router,
-  store,
-  vuetify,
-  render: (h) => h(App),
-}).$mount('#app')
+app.mount('#app')
