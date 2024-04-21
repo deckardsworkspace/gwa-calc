@@ -38,6 +38,6 @@ const colorStyle = colorStyles[props.color];
     :class="`bg-gradient-to-b border ${colorStyle} ${padding} ${rounded} drop-shadow-sm`"
     @click="emit('click')"
   >
-    <icon :class="`size-${size}`" />
+    <component :is="icon" :class="`size-${size}`" />
   </button>
 </template>
