@@ -17,7 +17,7 @@ const props = withDefaults(defineProps<Props>(), {
 const emit = defineEmits(['click']);
 
 const padding = props.small ? 'p-1.5' : 'p-3';
-const size = props.small ? 6 : 8;
+const size = props.small ? 'size-6' : 'size-8';
 const rounded = props.round ? 'rounded-full' : 'rounded-lg';
 const colorStyles: Record<string, string> = {
   gray: 'from-gray-50 to-gray-100 border border-gray-400 text-gray-600',
@@ -38,6 +38,6 @@ const colorStyle = colorStyles[props.color];
     :class="`bg-gradient-to-b border ${colorStyle} ${padding} ${rounded} drop-shadow-sm`"
     @click="emit('click')"
   >
-    <component :is="icon" :class="`size-${size}`" />
+    <component :is="icon" :class="size" />
   </button>
 </template>
