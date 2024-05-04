@@ -4,6 +4,8 @@ apis/GradesApi.ts
 apis/TermApi.ts
 apis/index.ts
 index.ts
+models/AccountCreateRequest.ts
+models/AccountUpdateRequest.ts
 models/CourseCreateRequest.ts
 models/CourseMultipleReadRequest.ts
 models/CourseMultipleResponse.ts
@@ -14,7 +16,6 @@ models/GradingSystem.ts
 models/HTTPValidationError.ts
 models/LoginRequest.ts
 models/LoginResponse.ts
-models/SignupRequest.ts
 models/TermCreateRequest.ts
 models/TermGradesPydantic.ts
 models/TermPydantic.ts

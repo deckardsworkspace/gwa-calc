@@ -14,31 +14,42 @@
 
 import * as runtime from '../runtime';
 import type {
+  AccountCreateRequest,
+  AccountUpdateRequest,
   HTTPValidationError,
   LoginRequest,
   LoginResponse,
-  SignupRequest,
   UserPydantic,
 } from '../models/index';
 import {
+  AccountCreateRequestFromJSON,
+  AccountCreateRequestToJSON,
+  AccountUpdateRequestFromJSON,
+  AccountUpdateRequestToJSON,
   HTTPValidationErrorFromJSON,
   HTTPValidationErrorToJSON,
   LoginRequestFromJSON,
   LoginRequestToJSON,
   LoginResponseFromJSON,
   LoginResponseToJSON,
-  SignupRequestFromJSON,
-  SignupRequestToJSON,
   UserPydanticFromJSON,
   UserPydanticToJSON,
 } from '../models/index';
+
+export interface CreateAccountRequest {
+  accountCreateRequest: AccountCreateRequest;
+}
 
 export interface LoginOperationRequest {
   loginRequest: LoginRequest;
 }
 
-export interface SignupOperationRequest {
-  signupRequest: SignupRequest;
+export interface UpdateAccountRequest {
+  accountUpdateRequest: AccountUpdateRequest;
+}
+
+export interface VerifyChangedEmailRequest {
+  token: string;
 }
 
 export interface VerifyEmailRequest {
@@ -49,6 +60,55 @@ export interface VerifyEmailRequest {
  *
  */
 export class AccountApi extends runtime.BaseAPI {
+  /**
+   * Create Account
+   */
+  async createAccountRaw(
+    requestParameters: CreateAccountRequest,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<any>> {
+    if (requestParameters['accountCreateRequest'] == null) {
+      throw new runtime.RequiredError(
+        'accountCreateRequest',
+        'Required parameter "accountCreateRequest" was null or undefined when calling createAccount().'
+      );
+    }
+
+    const queryParameters: any = {};
+
+    const headerParameters: runtime.HTTPHeaders = {};
+
+    headerParameters['Content-Type'] = 'application/json';
+
+    const response = await this.request(
+      {
+        path: `/account`,
+        method: 'PUT',
+        headers: headerParameters,
+        query: queryParameters,
+        body: AccountCreateRequestToJSON(requestParameters['accountCreateRequest']),
+      },
+      initOverrides
+    );
+
+    if (this.isJsonMime(response.headers.get('content-type'))) {
+      return new runtime.JSONApiResponse<any>(response);
+    } else {
+      return new runtime.TextApiResponse(response) as any;
+    }
+  }
+
+  /**
+   * Create Account
+   */
+  async createAccount(
+    requestParameters: CreateAccountRequest,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<any> {
+    const response = await this.createAccountRaw(requestParameters, initOverrides);
+    return await response.value();
+  }
+
   /**
    * Get Logged In User
    */
@@ -136,16 +196,16 @@ export class AccountApi extends runtime.BaseAPI {
   }
 
   /**
-   * Signup
+   * Update Account
    */
-  async signupRaw(
-    requestParameters: SignupOperationRequest,
+  async updateAccountRaw(
+    requestParameters: UpdateAccountRequest,
     initOverrides?: RequestInit | runtime.InitOverrideFunction
   ): Promise<runtime.ApiResponse<any>> {
-    if (requestParameters['signupRequest'] == null) {
+    if (requestParameters['accountUpdateRequest'] == null) {
       throw new runtime.RequiredError(
-        'signupRequest',
-        'Required parameter "signupRequest" was null or undefined when calling signup().'
+        'accountUpdateRequest',
+        'Required parameter "accountUpdateRequest" was null or undefined when calling updateAccount().'
       );
     }
 
@@ -155,13 +215,21 @@ export class AccountApi extends runtime.BaseAPI {
 
     headerParameters['Content-Type'] = 'application/json';
 
+    if (this.configuration && this.configuration.accessToken) {
+      const token = this.configuration.accessToken;
+      const tokenString = await token('HTTPBearer', []);
+
+      if (tokenString) {
+        headerParameters['Authorization'] = `Bearer ${tokenString}`;
+      }
+    }
     const response = await this.request(
       {
-        path: `/account/signup`,
-        method: 'PUT',
+        path: `/account/me`,
+        method: 'PATCH',
         headers: headerParameters,
         query: queryParameters,
-        body: SignupRequestToJSON(requestParameters['signupRequest']),
+        body: AccountUpdateRequestToJSON(requestParameters['accountUpdateRequest']),
       },
       initOverrides
     );
@@ -174,13 +242,63 @@ export class AccountApi extends runtime.BaseAPI {
   }
 
   /**
-   * Signup
+   * Update Account
    */
-  async signup(
-    requestParameters: SignupOperationRequest,
+  async updateAccount(
+    requestParameters: UpdateAccountRequest,
     initOverrides?: RequestInit | runtime.InitOverrideFunction
   ): Promise<any> {
-    const response = await this.signupRaw(requestParameters, initOverrides);
+    const response = await this.updateAccountRaw(requestParameters, initOverrides);
+    return await response.value();
+  }
+
+  /**
+   * Verify Changed Email
+   */
+  async verifyChangedEmailRaw(
+    requestParameters: VerifyChangedEmailRequest,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<any>> {
+    if (requestParameters['token'] == null) {
+      throw new runtime.RequiredError(
+        'token',
+        'Required parameter "token" was null or undefined when calling verifyChangedEmail().'
+      );
+    }
+
+    const queryParameters: any = {};
+
+    if (requestParameters['token'] != null) {
+      queryParameters['token'] = requestParameters['token'];
+    }
+
+    const headerParameters: runtime.HTTPHeaders = {};
+
+    const response = await this.request(
+      {
+        path: `/account/verify/change`,
+        method: 'GET',
+        headers: headerParameters,
+        query: queryParameters,
+      },
+      initOverrides
+    );
+
+    if (this.isJsonMime(response.headers.get('content-type'))) {
+      return new runtime.JSONApiResponse<any>(response);
+    } else {
+      return new runtime.TextApiResponse(response) as any;
+    }
+  }
+
+  /**
+   * Verify Changed Email
+   */
+  async verifyChangedEmail(
+    requestParameters: VerifyChangedEmailRequest,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<any> {
+    const response = await this.verifyChangedEmailRaw(requestParameters, initOverrides);
     return await response.value();
   }
 

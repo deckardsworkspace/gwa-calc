@@ -1,5 +1,7 @@
 /* tslint:disable */
 /* eslint-disable */
+export * from './AccountCreateRequest';
+export * from './AccountUpdateRequest';
 export * from './CourseCreateRequest';
 export * from './CourseMultipleReadRequest';
 export * from './CourseMultipleResponse';
@@ -10,7 +12,6 @@ export * from './GradingSystem';
 export * from './HTTPValidationError';
 export * from './LoginRequest';
 export * from './LoginResponse';
-export * from './SignupRequest';
 export * from './TermCreateRequest';
 export * from './TermGradesPydantic';
 export * from './TermPydantic';
