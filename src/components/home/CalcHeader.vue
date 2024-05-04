@@ -2,13 +2,24 @@
 import { IconNewReleases, IconPersonOutline } from '@iconify-prerendered/vue-material-symbols';
 import { useGradesStore } from '@/stores/grades';
 import { ref, watch } from 'vue';
+import LoginForm from './LoginForm.vue';
+import TooltipWrapper from '../common/TooltipWrapper.vue';
 
 const { term } = useGradesStore();
 const currentTermName = ref(term.name);
+const loginFormVisible = ref(false);
 
 watch(term, () => {
   currentTermName.value = term.name;
 });
+
+const openLoginForm = () => {
+  loginFormVisible.value = true;
+};
+
+const closeLoginForm = () => {
+  loginFormVisible.value = false;
+};
 </script>
 
 <template>
@@ -23,12 +34,16 @@ watch(term, () => {
       </div>
 
       <div class="flex flex-row-reverse items-center gap-4">
-        <div
-          class="overflow-hidden rounded-full size-10 md:size-12 bg-gray-200 flex justify-center items-center"
-        >
-          <IconPersonOutline class="size-6 md:size-7 text-gray-600" />
-        </div>
+        <TooltipWrapper location="left" text="Log in to sync grades" @click="openLoginForm">
+          <div
+            class="overflow-hidden rounded-full size-10 md:size-12 bg-gray-200 flex justify-center items-center"
+          >
+            <IconPersonOutline class="size-6 md:size-7 text-gray-600" />
+          </div>
+        </TooltipWrapper>
       </div>
     </div>
+
+    <LoginForm ref="login-form" :open="loginFormVisible" @closed="closeLoginForm" />
   </header>
 </template>

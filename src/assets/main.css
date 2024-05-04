@@ -1,5 +1,6 @@
 @import './inter.css';
 @import './base.css';
+@import '@webzlodimir/vue-bottom-sheet/dist/style.css';
 
 /**
   * Text styles

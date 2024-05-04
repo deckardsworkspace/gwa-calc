@@ -16,6 +16,8 @@
   },
   "dependencies": {
     "@iconify-prerendered/vue-material-symbols": "^0.23.1712902005",
+    "@tanstack/vue-query": "^5.32.1",
+    "@webzlodimir/vue-bottom-sheet": "^3.0.5",
     "pinia": "^2.1.7",
     "vue": "^3.4.21",
     "vue-router": "^4.3.0"
