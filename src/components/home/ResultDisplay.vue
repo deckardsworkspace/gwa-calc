@@ -1,10 +1,12 @@
 <script setup lang="ts">
-import { IconBackspace } from '@iconify-prerendered/vue-material-symbols';
+import { IconBackspace, IconCheck } from '@iconify-prerendered/vue-material-symbols';
 import { computed } from 'vue';
 import { useGradesStore } from '@/stores/grades';
+import { useToastStore } from '@/stores/toast';
 import ActionButton from '../common/ActionButton.vue';
 
 const store = useGradesStore();
+const toastStore = useToastStore();
 const result = computed(() => {
   const resultRounded = `${store.average.toFixed(4)}`;
   return resultRounded.substring(0, resultRounded.length - 1);
@@ -12,6 +14,7 @@ const result = computed(() => {
 
 const clearResult = () => {
   store.resetGrades();
+  toastStore.showToast('Grades cleared', IconCheck());
 };
 </script>
 
