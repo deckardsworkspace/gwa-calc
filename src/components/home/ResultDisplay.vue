@@ -19,12 +19,19 @@ const clearResult = () => {
 
 // Change the styles of the result display when it snaps to top on scroll
 const isStuck = ref(false);
-const dynamicStyles = computed(() => {
+const containerStyles = computed(() => {
+  if (isStuck.value) {
+    return 'px-0';
+  }
+
+  return 'px-4 md:px-8';
+});
+const displayStyles = computed(() => {
   if (isStuck.value) {
     return 'from-orange-200';
   }
 
-  return 'rounded-3xl inset-shadow from-orange-100';
+  return 'rounded-xl md:rounded-3xl inset-shadow from-orange-100';
 });
 onMounted(() => {
   const resultDisplay = document.getElementById('result-display');
@@ -44,11 +51,16 @@ onMounted(() => {
 </script>
 
 <template>
-  <div id="result-display" class="sticky z-10 mb-12 w-full">
+  <div
+    id="result-display"
+    :class="`${containerStyles} transition-all duration-300 sticky z-10 w-full`"
+  >
     <div
-      :class="`${dynamicStyles} transition-all duration-300 flex justify-between p-8 items-center bg-gradient-to-b to-orange-300`"
+      :class="`${displayStyles} transition-all duration-300 flex justify-between items-center bg-gradient-to-b to-orange-300 p-4 md:p-8`"
     >
-      <h1 class="numeric font-light text-6xl text-orange-800">{{ result }}</h1>
+      <h1 class="numeric font-normal md:font-light text-3xl md:text-6xl text-orange-800">
+        {{ result }}
+      </h1>
 
       <div class="flex flex-row-reverse gap-4">
         <ActionButton :icon="IconBackspace" color="orange" @click="clearResult" />

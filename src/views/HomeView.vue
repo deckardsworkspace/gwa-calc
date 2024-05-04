@@ -5,7 +5,7 @@ import ResultDisplay from '../components/home/ResultDisplay.vue';
 </script>
 
 <template>
-  <div class="max-w-4xl w-full max-h-fit h-full relative p-8 mx-auto">
+  <div class="max-w-4xl w-full max-h-fit h-full relative mx-auto">
     <CalcHeader />
     <ResultDisplay />
     <CourseTable />

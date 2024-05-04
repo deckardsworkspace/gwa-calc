@@ -16,8 +16,8 @@ const props = withDefaults(defineProps<Props>(), {
 
 const emit = defineEmits(['click']);
 
-const padding = props.small ? 'p-1.5' : 'p-3';
-const size = props.small ? 'size-6' : 'size-8';
+const padding = props.small ? 'p-1 md:p-1.5' : 'p-2 md:p-3';
+const size = props.small ? 'size-6' : 'size-6 md:size-8';
 const rounded = props.round ? 'rounded-full' : 'rounded-lg';
 const colorStyles: Record<string, string> = {
   gray: 'from-gray-50 to-gray-100 border border-gray-400 text-gray-600',
