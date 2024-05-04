@@ -44,6 +44,8 @@ h4 {
   * Mobile styles
   */
 
-a, button, input {
+a,
+button,
+input {
   touch-action: manipulation;
 }

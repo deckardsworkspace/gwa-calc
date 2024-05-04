@@ -1,9 +1,14 @@
 <script setup lang="ts">
 import { IconNewReleases, IconPersonOutline } from '@iconify-prerendered/vue-material-symbols';
+import { useGradesStore } from '@/stores/grades';
+import { ref, watch } from 'vue';
 
-defineProps<{
-  currentTermName: string;
-}>();
+const { term } = useGradesStore();
+const currentTermName = ref(term.name);
+
+watch(term, () => {
+  currentTermName.value = term.name;
+});
 </script>
 
 <template>

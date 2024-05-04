@@ -1,26 +1,16 @@
 <script setup lang="ts">
 import { IconAdd, IconRemove } from '@iconify-prerendered/vue-material-symbols';
-import ActionButton from '../common/ActionButton.vue';
+import { computed } from 'vue';
+import { useGradesStore } from '@/stores/grades';
 import type { CoursePydantic } from '@/api';
-import { ref, watch } from 'vue';
+import ActionButton from '../common/ActionButton.vue';
 
 const props = defineProps<{
   course: CoursePydantic;
-  grade: number;
 }>();
+const { getGrade, setGrade } = useGradesStore();
 
-const emit = defineEmits<{
-  (e: 'update', payload: { id: string; newGrade: number }): void;
-}>();
-const grade = ref(props.grade);
-
-watch(
-  () => props.grade,
-  (newGrade) => {
-    grade.value = newGrade;
-  }
-);
-
+const grade = computed(() => getGrade(props.course.id));
 const gradingScale = props.course.gradePointScale;
 
 const incrementGrade = () => {
@@ -31,7 +21,7 @@ const incrementGrade = () => {
     newIndex = currentIndex + 1;
   }
 
-  emit('update', { id: props.course.id, newGrade: gradingScale[newIndex] });
+  setGrade(props.course.id, gradingScale[newIndex]);
 };
 
 const decrementGrade = () => {
@@ -42,7 +32,7 @@ const decrementGrade = () => {
     newIndex = currentIndex - 1;
   }
 
-  emit('update', { id: props.course.id, newGrade: gradingScale[newIndex] });
+  setGrade(props.course.id, gradingScale[newIndex]);
 };
 </script>
 
