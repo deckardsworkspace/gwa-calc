@@ -1,6 +1,13 @@
-export const ADMIN_UUID = '3e2b6caa-d329-44f2-ac1c-33b5e32c3e2a';
-export const BOR_MEETING_DATE = new Date(1626393600000);
-export const BOR_MEETING_DESC = 'BOR Meeting 2021-07-16';
+import { PshsTerm } from './terms-pshs';
 
-export const API_HOST: string = process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:9050';
-export const BASE_HOST: string = process.env.NEXT_PUBLIC_BASE_URL ?? 'http://localhost:3050';
+export const DEFAULT_TERM: PshsTerm = PshsTerm.GRADE_7;
+
+export const API_HOST: string = import.meta.env.VITE_API_URL ?? 'http://localhost:9050';
+export const BASE_HOST: string = import.meta.env.VITE_BASE_URL ?? 'http://localhost:3050';
+
+export const LS_KEY_AUTH_TOKEN: string = 'authToken';
+export const LS_KEY_USERNAME: string = 'username';
+export const LS_KEY_EMAIL: string = 'email';
+export const LS_KEY_AVATAR_URL: string = 'avatarUrl';
+
+export const QK_USER_DETAILS: string = 'userDetails';

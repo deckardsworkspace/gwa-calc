@@ -18,11 +18,12 @@ const locationStyle = computed(() => locationStyles[props.location]);
 <template>
   <div class="relative group">
     <slot></slot>
-    <span
-      :class="`${locationStyle} tooltip tooltip-${location} absolute block w-40 invisible group-hover:visible bg-black text-gray-50 text-sm rounded-md p-2 z-20`"
+
+    <div
+      :class="`${locationStyle} tooltip tooltip-${location} absolute inline-block w-auto invisible group-hover:visible bg-black text-gray-50 text-sm rounded-md p-2 z-20`"
     >
-      {{ text }}
-    </span>
+      <span>{{ text }}</span>
+    </div>
   </div>
 </template>
 

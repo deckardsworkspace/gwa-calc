@@ -3,7 +3,10 @@
  */
 
 import { GradingSystem, type TermPydantic as Term } from '../api';
-import { ADMIN_UUID, BOR_MEETING_DATE, BOR_MEETING_DESC } from './constants';
+
+const ADMIN_UUID = '3e2b6caa-d329-44f2-ac1c-33b5e32c3e2a';
+const BOR_MEETING_DATE = new Date(1626393600000);
+const BOR_MEETING_DESC = 'BOR Meeting 2021-07-16';
 
 export enum PshsTerm {
   GRADE_7 = 'db5b3657-85b1-459a-82c0-50883b75cb7b',

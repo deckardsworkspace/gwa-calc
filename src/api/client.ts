@@ -1,8 +1,8 @@
 import { AccountApi, Configuration, CourseApi, GradesApi, type Middleware, TermApi } from '.';
-import { API_HOST } from '@/utils/constants';
+import { API_HOST, LS_KEY_AUTH_TOKEN } from '@/utils/constants';
 
 const createRequestHeaders = (otherHeaders: HeadersInit | undefined): HeadersInit => {
-  const authToken = localStorage.getItem('authToken');
+  const authToken = localStorage.getItem(LS_KEY_AUTH_TOKEN);
 
   return {
     ...(otherHeaders ?? {}),
