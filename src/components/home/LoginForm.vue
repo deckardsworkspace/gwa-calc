@@ -112,6 +112,7 @@ const isPending = computed(() => isLoggingIn.value === true || isGettingUserDeta
           type="password"
           :disabled="isPending"
           :icon="IconPassword2"
+          @keydown.enter="login"
           required
         />
         <RegularButton
