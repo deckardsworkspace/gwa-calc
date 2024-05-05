@@ -24,10 +24,8 @@ watch(open, () => {
   }
 
   if (open.value) {
-    console.log('[AccountForm] Opened');
     accountForm.value.sheetRef?.open();
   } else {
-    console.log('[AccountForm] Closed');
     accountForm.value.sheetRef?.close();
   }
 });

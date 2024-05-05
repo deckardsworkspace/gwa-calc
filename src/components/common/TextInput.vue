@@ -1,12 +1,22 @@
 <script setup lang="ts">
 import { computed, useAttrs, ref, type VNode } from 'vue';
 
+const inputRef = ref();
+
+defineExpose({
+  focus: () => {
+    console.log(inputRef.value);
+    setTimeout(() => {
+      inputRef.value.focus();
+    }, 500);
+  },
+});
+
 defineOptions({
   inheritAttrs: false,
 });
 
 defineProps<{
-  focusOnMount?: boolean;
   icon?: VNode;
 }>();
 
@@ -33,6 +43,7 @@ const isDisabled = computed(() => attrs.disabled === true);
     />
 
     <input
+      ref="inputRef"
       class="flex-grow focus:outline-none disabled:bg-gray-100 disabled:cursor-not-allowed invalid:border-red-500"
       @focusin="isFocused = true"
       @focusout="isFocused = false"

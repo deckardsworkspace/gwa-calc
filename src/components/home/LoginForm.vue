@@ -23,17 +23,17 @@ const props = defineProps<{
 
 const open = computed(() => props.open);
 const loginForm = ref();
+const emailInput = ref();
 
 watch(open, () => {
-  if (!loginForm.value) {
+  if (!loginForm.value || !emailInput.value) {
     return;
   }
 
   if (open.value) {
-    console.log('[LoginForm] Opened');
     loginForm.value.sheetRef?.open();
+    emailInput.value.focus();
   } else {
-    console.log('[LoginForm] Closed');
     loginForm.value.sheetRef?.close();
   }
 });
@@ -97,6 +97,7 @@ const isPending = computed(() => isLoggingIn.value === true || isGettingUserDeta
 
       <div class="max-w-80 w-full">
         <TextInput
+          ref="emailInput"
           v-model="email"
           placeholder="Email address"
           type="email"
